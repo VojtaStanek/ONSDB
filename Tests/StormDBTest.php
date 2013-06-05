@@ -21,6 +21,8 @@ if(isset($db->$collName)) {
 }
 $coll = $db->collection($collName);
 Debugger::barDump(array('Collection '.$collName => $coll));
+
+Debugger::barDump(array('Results from coll' => $coll->find()));
 /*
 $data = array(
 		'name' => 'Vojta',

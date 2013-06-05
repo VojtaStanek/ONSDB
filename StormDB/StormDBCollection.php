@@ -2,12 +2,14 @@
 
 class StormDBCollection extends StormDBBase
 {
-	public $name;
-	public $where;
+	private $name;
+	private $where;
+	private $base;
 
-	public function __construct($name, $file)
+	public function __construct($name, $base)
 	{
 		$this->name = $name;
+		$this->base = $base;
 	}
 
 	public function where($where)
@@ -16,9 +18,14 @@ class StormDBCollection extends StormDBBase
 		return $this;
 	}
 
+
+	/**
+	* find() function
+	* returns results form database
+	*/
 	public function find()
 	{
-
+		return $this->base->build[$this->name];
 	}
 
 
