@@ -6,10 +6,10 @@ Debugger::enable(Debugger::DEVELOPMENT);
 ?>
 <h1>StormDB Testing</h1>
 <?php
-require '/var/www/pokusy/StormDB/StormDBClass.php';
+require __DIR__.'/../StormDB/StormLoader.php';
 
 
-$db = new StormDB('testdb', './', 'r+', true);
+$db = new StormDB('testdb', './../Databases/', 'r+', true);
 //$db->add(mt_rand());
 /*
 $data = array(
