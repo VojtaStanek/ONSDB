@@ -11,6 +11,16 @@ require __DIR__.'/../StormDB/StormLoader.php';
 
 $db = new StormDB('testdb', './../Databases/', 'r+', true);
 //$db->add(mt_rand());
+
+$collName = 'First coll';
+if(isset($db->$collName)) {
+	echo "Collection '".$collName."' allready exists.";
+} else {
+	echo "Collection '".$collName."' isn't set. I'm adding it";
+	$db->add($collName);
+}
+$coll = $db->collection($collName);
+Debugger::barDump(array('Collection '.$collName => $coll));
 /*
 $data = array(
 		'name' => 'Vojta',

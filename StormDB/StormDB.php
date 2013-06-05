@@ -77,8 +77,8 @@ class StormDB extends StormDBBase
 
 	public function collection($name)
 	{
-		if(isset($this->base->collections[$name])) {
-			return new CollectionStormDB($name, $this->base->file);
+		if($this->__isset($name)) {
+			return new StormDBCollection($name, $this->base->file);
 		}
 		return false;
 	}
