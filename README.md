@@ -1,34 +1,27 @@
 StormDB
 =======
 
-StormDB is an database no-SQL engine written in/for PHP. It is inspirated by MongoDB and Nette\Database.
+StormDB is an NoSQL database engine written in & for PHP. It is inspirated by MongoDB and Nette\Database.
 
-Useage
-------
+__This engine is under development so there might be many bugs!__
 
-See ./Tests/StormDBTest.php
+Usage
+-----
 
-Author
-------
+See ./Tests/
 
- - Vojta Staněk <stanekv01@gmail.com>
+If you want to use debugger you have to download [Nette](http://www.nette.org/en)
 
-Features
---------
 
-### Done
- - loading database form *.storm file (load/reload)
- - adding a collecton (add)
+Authors
+-------
 
-### Todo
- - security
- - where()
+ - Vojta Staněk <stanekv01@gmail.com>  - Project founder
+
  
 Folders
 -------
- - Databases
- - StormDB
-  - StormLoader.php - loads StormDB
-  - ...
- - Tests
-  - Here are some test (can be used as exaamples)
+ - `Databases`: Databases used for testing
+ - `StormDB`: The core
+  - `StormLoader.php`: loads StormDB
+ - `Tests` Test (can be used as exaamples)
