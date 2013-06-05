@@ -70,14 +70,14 @@ class StormDB extends StormDBBase
 
 	public function reload($debugMsg = '')
 	{
-		unset($this->base->dataFile, $this->base->collections, $this->base->parents, $this->base->data, $this->base->types);
+		$this->resetData();
 		$this->base->load();
 		$this->debugMsg(array('StormDB reloaded '.$debugMsg => $this));
 	}
 
 	public function collection($name)
 	{
-		if($this->base->collections[$name]) {
+		if(isset($this->base->collections[$name])) {
 			return new CollectionStormDB($name, $this->base->file);
 		}
 		return false;
@@ -88,7 +88,7 @@ class StormDB extends StormDBBase
 	// --DEV
 		if (!is_array($data)) {
 			$name = $data;
-			if ($this->__isset($name)) {
+			if (!$this->__isset($name)) {
 				$handle = fopen($this->base->fileName, 'a');
 				fwrite($handle, PHP_EOL.'0'.$name);
 				fclose($handle);

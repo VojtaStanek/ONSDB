@@ -34,4 +34,14 @@ class StormDBBase
 			Debugger::barDump($msg);
 		}
 	}
+
+	protected function resetData()
+	{
+		unset($this->dataFile, $this->collections, $this->types, $this->data, $this->parents, $this->build);
+		$this->collections = array();
+		$this->build = array();
+		$this->types = array();
+		$this->data = array();
+		$this->parents = array();
+	}
 }
