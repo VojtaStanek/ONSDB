@@ -49,13 +49,12 @@ class StormDB extends StormDBBase
 		for ($depth=0; $depth < 10; $depth++) { 
 			foreach ($this->base->types as $key => $type) {
 				if ($type == $depth) {
-
 					if($this->base->parents[$key] >= 0) {
-						if(!isset($parentsBuild[$this->base->data[$this->base->parents[$key]]]))
-							$parentsBuild[$this->base->data[$this->base->parents[$key]]] = array();
-						$parentsBuild[$this->base->data[$this->base->parents[$key]]][$this->base->data[$key]] = $this->base->data[$key];
+						if(!isset($parentsBuild[$this->base->parents[$key]]))
+							$parentsBuild[$this->base->parents[$key]] = array();
+						$parentsBuild[$this->base->parents[$key]][$key] = $key;
 					} else {
-						$parentsBuild['BASE'][$this->base->data[$key]] = $this->base->data[$key];
+						$parentsBuild['BASE'][$key] = $key;
 					}
 
 				}
@@ -64,7 +63,8 @@ class StormDB extends StormDBBase
 			
 
 		}
-		$this->base->build = buildTree($parentsBuild, 'BASE');
+
+		$this->base->build = assignNames(buildTree($parentsBuild, 'BASE'), $this->base->data);
 	}
 
 
