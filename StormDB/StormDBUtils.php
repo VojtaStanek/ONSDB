@@ -16,3 +16,16 @@ function buildTree(array $source, $search)
 	}
 	return $out;
 }
+
+function assignNames(array $source, array $names)
+{
+	$result = array();
+	foreach ($source as $key => $value) {
+		if (is_array($value)) {
+			$result[$names[$key]] = assignNames($source[$key], $names);
+		} else {
+			$result[$names[$key]] = $names[$value];
+		}
+	}
+	return $result;
+}
