@@ -9,10 +9,10 @@ Debugger::enable(Debugger::DEVELOPMENT);
 require __DIR__.'/../StormDB/StormLoader.php';
 
 
-$db = new StormDB('testdb', './../Databases/', 'r+', true);
+$db = new StormDB('google', './../Databases/', 'r+', true);
 //$db->add(mt_rand());
 
-$collName = 'First coll';
+$collName = 'Users';
 if(isset($db->$collName)) {
 	echo "Collection '".$collName."' allready exists.";
 } else {
