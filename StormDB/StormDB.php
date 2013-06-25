@@ -13,46 +13,48 @@ class StormDB extends StormDBBase
 
 	private function load() 
 	{
-		$this->base->dataFile = file($this->base->fileName);
-
 		$last = array(-1 => -1);
 		$beforeType = 0;
 
 		$data = array();
 		$keys = array();
 
-		// Collections, data, types, extends loading
-		foreach ($this->base->dataFile as $key => $value) {
+		$file = fopen($this->fileName, 'r');
+		$key = 0;
+		while (!feof($file)) {
+			$value = fgets($file);
 			$type = substr($value, 0, 1)*1;
 			$data = substr($value, 1, strlen($value)-2);
-			$this->base->types[] = $type;
-			$this->base->data[] = $data;
-			$this->base->parents[$key] = $last[$type-1];
+			$this->types[] = $type;
+			$this->data[] = $data;
+			$this->parents[$key] = $last[$type-1];
+			$this->linesBytes[] = fTell($file);
 			
 			if($type-1 > $beforeType) {
 				$line = $key+1;
-				$excMsg = "Incorrect declaration of type in '".$this->base->database."' line ".$line;
+				$excMsg = "Incorrect declaration of type in '".$this->database."' line ".$line;
 				throw new StormDBException($excMsg, 0);
 			}
 
 			if ($type == 0) {
-				$this->base->collections[] = $data;
+				$this->collections[] = $data;
 				
 			}
 
 			$last[$type] = $key;
 			$beforeType = $type;
+			$key++;
 		}
 
 		$parentsBuild = array('BASE' => array());
 
 		for ($depth=0; $depth < 10; $depth++) { 
-			foreach ($this->base->types as $key => $type) {
+			foreach ($this->types as $key => $type) {
 				if ($type == $depth) {
-					if($this->base->parents[$key] >= 0) {
-						if(!isset($parentsBuild[$this->base->parents[$key]]))
-							$parentsBuild[$this->base->parents[$key]] = array();
-						$parentsBuild[$this->base->parents[$key]][$key] = $key;
+					if($this->parents[$key] >= 0) {
+						if(!isset($parentsBuild[$this->parents[$key]]))
+							$parentsBuild[$this->parents[$key]] = array();
+						$parentsBuild[$this->parents[$key]][$key] = $key;
 					} else {
 						$parentsBuild['BASE'][$key] = $key;
 					}
@@ -64,21 +66,26 @@ class StormDB extends StormDBBase
 
 		}
 
-		$this->base->build = assignNames(buildTree($parentsBuild, 'BASE'), $this->base->data);
+		$this->build = assignNames(buildTree($parentsBuild, 'BASE'), $this->data);
 	}
 
 
 	public function reload($debugMsg = '')
 	{
 		$this->resetData();
-		$this->base->load();
+		$this->load();
 		$this->debugMsg(array('StormDB reloaded '.$debugMsg => $this));
 	}
 
 	public function collection($name)
 	{
 		if($this->__isset($name)) {
-			return new StormDBCollection($name, $this->base);
+			foreach (array_keys($this->parents, -1) as $key => $value) {
+				if ($this->data[$value] = $name) {
+					$byte = $this->linesBytes[$value];
+					return new StormDBItem($name, 0, $byte, $this);
+				}
+			}
 		}
 		return false;
 	}
@@ -89,7 +96,7 @@ class StormDB extends StormDBBase
 		if (!is_array($data)) {
 			$name = $data;
 			if (!$this->__isset($name)) {
-				$handle = fopen($this->base->fileName, 'a');
+				$handle = fopen($this->fileName, 'a');
 				fwrite($handle, PHP_EOL.'0'.$name);
 				fclose($handle);
 				$this->reload('add coll. '.$name);
@@ -99,7 +106,7 @@ class StormDB extends StormDBBase
 		} else {
 			foreach ($data as $name => $value) {
 				if ($this->__isset($name)) {
-					$handle = fopen($this->base->fileName, 'a');
+					$handle = fopen($this->fileName, 'a');
 					fwrite($handle, PHP_EOL.'0'.$name);
 					fclose($handle);
 					$this->reload('add coll. '.$name);
@@ -128,6 +135,6 @@ class StormDB extends StormDBBase
 	 **/
 	public function __isset($name)
 	{
-		return isset(array_flip($this->base->collections)[$name]);
+		return isset(array_flip($this->collections)[$name]);
 	}
 }

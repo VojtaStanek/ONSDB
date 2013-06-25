@@ -9,12 +9,12 @@ class StormDBBase
 	protected $debug = false;
 
 	// Database
-	protected $dataFile;
 	protected $collections = array();
 	protected $types;
 	protected $data;
 	protected $parents;
 	protected $build = array();
+	protected $linesBytes;
 
 	protected function __construct($args)
 	{
@@ -37,7 +37,7 @@ class StormDBBase
 
 	protected function resetData()
 	{
-		unset($this->dataFile, $this->collections, $this->types, $this->data, $this->parents, $this->build);
+		unset($this->collections, $this->types, $this->data, $this->parents, $this->build);
 		$this->collections = array();
 		$this->build = array();
 		$this->types = array();

@@ -1,14 +1,16 @@
 <?php
 
-class StormDBCollection extends StormDBBase
+class StormDBItem extends StormDBBase
 {
 	private $name;
+	private $depth;
 	private $where;
 	private $base;
 
-	public function __construct($name, $base)
+	public function __construct($name, $depth, $point, $base)
 	{
 		$this->name = $name;
+		$this->depth = $depth;
 		$this->base = $base;
 	}
 
@@ -42,6 +44,17 @@ class StormDBCollection extends StormDBBase
 	 * @return void
 	 **/
 	public function rename($new)
+	{
+
+	}
+
+	/**
+	 * add function
+	 *
+	 * @param string Name
+	 * @return void
+	 **/
+	public function add($name)
 	{
 
 	}
