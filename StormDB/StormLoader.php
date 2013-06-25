@@ -1,15 +1,7 @@
 <?php
-
-$filePre = 'StormDB';
-
-$classes = array(
-	'Utils',
-	'Base',
-	'',
-	'Collection'
-	);
-
-
-foreach ($classes as $name) {
-	require $filePre.$name.'.php';
+$dir = opendir(dirname(__FILE__));
+while ($file = readdir($dir)){
+	if($file != '.' && $file != '..' && $file != pathinfo(__FILE__, PATHINFO_BASENAME)) {
+		require $file;
+	}
 }
