@@ -8,9 +8,15 @@ __This engine is under development so there might be many bugs!__
 Usage
 -----
 
-See ./Tests/
+For tests running you have to install dependies by composer and write a `localSetup.php` and write in there:
+```
+<?php
+require '../vendor/cactucs/debugger/loader.php';
+Debugger::setDebugger('Default'); // Or other debugger. See Cactucs/Debugger docs
+```
 
-If you want to use debugger you have to download [Nette](http://www.nette.org/en)
+
+See `Tests` folder for examples.
 
 
 Authors
@@ -24,4 +30,5 @@ Folders
  - `Databases`: Databases used for testing
  - `StormDB`: The core
   - `StormLoader.php`: loads StormDB
- - `Tests` Test (can be used as exaamples)
+ - `Tests`: Test (can be used as examples)
+ - `vendor`: External libs (e.g. cactucs/debugger)

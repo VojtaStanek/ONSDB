@@ -1,11 +1,8 @@
-<?php 
-require '/var/www/nette/Nette/loader.php';
-use Nette\Diagnostics\Debugger;
-
-Debugger::enable(Debugger::DEVELOPMENT);
-?>
 <h1>StormDB Testing</h1>
 <?php
+
+require 'localSetup.php';
+
 require __DIR__.'/../StormDB/StormLoader.php';
 
 
@@ -20,9 +17,9 @@ if(isset($db->$collName)) {
 	$db->add($collName);
 }
 $coll = $db->collection($collName);
-Debugger::barDump(array('Collection '.$collName => $coll));
+Debugger::dump(array('Collection '.$collName => $coll));
 
-Debugger::barDump(array('Results from coll' => $coll->find()));
+Debugger::dump(array('Results from coll' => $coll->find()));
 /*
 $data = array(
 		'name' => 'Vojta',
