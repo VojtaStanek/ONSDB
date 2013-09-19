@@ -28,13 +28,6 @@ class StormDBBase
 		return $this;
 	}
 
-	protected function debugMsg($msg)
-	{
-		if($this->debug) {
-			Debugger::barDump($msg);
-		}
-	}
-
 	protected function resetData()
 	{
 		unset($this->collections, $this->types, $this->data, $this->parents, $this->build);

@@ -8,7 +8,7 @@ class StormDB extends StormDBBase
 	{
 		$this->base = parent::__construct(func_get_args());
 		$this->load();
-		$this->debugMsg(array('StormDB loaded:' => $this));
+		Debugger::dump(array('StormDB loaded:' => $this));
 	}
 
 	private function load() 
@@ -74,7 +74,7 @@ class StormDB extends StormDBBase
 	{
 		$this->resetData();
 		$this->load();
-		$this->debugMsg(array('StormDB reloaded '.$debugMsg => $this));
+		Debugger::dump(array('StormDB reloaded '.$debugMsg => $this));
 	}
 
 	public function collection($name)
