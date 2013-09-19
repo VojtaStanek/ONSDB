@@ -2,11 +2,10 @@
 
 class StormDB extends StormDBBase
 {
-	protected $base;
 
 	public function __construct()
 	{
-		$this->base = parent::__construct(func_get_args());
+		parent::__construct(func_get_args());
 		$this->load();
 		Debugger::dump(array('StormDB loaded:' => $this));
 	}
